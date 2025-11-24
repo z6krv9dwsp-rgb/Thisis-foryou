@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>SIMULATED HACK APP — Prank</title>
+<meta name="theme-color" content="#00110a">
+<style>
+  :root{
+    --bg:#00110a;
+    --panel:#07120e;
+    --green:#80ff7a;
+    --muted:#6fa67a;
+    --accent:#0f7a50;
+    --danger:#ff6b6b;
+  }
+  html,body{height:100%;margin:0;font-family: "Courier New", Courier, monospace;background:linear-gradient(180deg,var(--bg),#001316 75%);color:var(--green);}
+  .app {
+    max-width:420px;
+    margin:18px auto;
+    height:calc(100vh - 36px);
+    background:linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.45));
+    border-radius:18px;
+    box-shadow:0 12px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+    overflow:hidden;
+    border:1px solid rgba(0,255,120,0.03);
+  }
+  .topbar{
+    height:56px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:0 12px;
+    background:linear-gradient(90deg, rgba(0,255,120,0.02), rgba(0,0,0,0));
+    border-bottom:1px solid rgba(0,255,120,0.03);
+  }
+  .dots{display:flex;gap:6px;align-items:center;}
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--muted);opacity:0.9}
+  .title{flex:1;font-weight:700;color:var(--green);font-size:14px;}
+  .warn-badge{background:rgba(255,0,0,0.08);color:var(--danger);padding:6px 8px;border-radius:8px;font-weight:700;font-size:12px;border:1px solid rgba(255,0,0,0.12)}
+  .terminal-wrap{padding:14px;height:calc(100% - 56px);box-sizing:border-box;display:flex;flex-direction:column;}
+  .screen {background:linear-gradient(180deg,#001814 0%, #00130f 100%);border-radius:10px;padding:12px;flex:1;overflow:auto;border:1px solid rgba(128,255,122,0.04);box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);}
+  .line{ white-space:pre-wrap; font-size:14px; margin:6px 0; color:var(--green); opacity:0.98; }
+  .line.bad{ color:var(--danger); }
+  .line.dim{ color:var(--muted); font-style:italic; font-size:12px; }
+  .prompt{ color: #9ffeab; font-weight:700; }
+  .footer-row{ display:flex; justify-content:space-between; gap:8px; align-items:center; margin-top:10px; }
+  .btn{ background:transparent;border:1px solid rgba(128,255,122,0.08);padding:8px 10px;border-radius:10px;color:var(--green);font-weight:700;font-size:13px; }
+  .btn.strong{ background:linear-gradient(90deg, rgba(128,255,122,0.06), rgba(0,0,0,0.02)); border:1px solid rgba(128,255,122,0.14); }
+  .center-note{ text-align:center;color:var(--muted);font-size:12px;padding:8px 4px; }
+  .fullscreen { width:100vw; height:100vh; max-width:none; border-radius:0; margin:0; }
+  @media (max-width:480px){
+    .app { margin:6px; height:calc(100vh - 12px); border-radius:12px; }
+    .topbar{height:50px}
+    .title{font-size:13px}
+    .line{font-size:15px}
+  }
+</style>
+</head>
+<body>
+  <div class="app" id="app">
+    <div class="topbar">
+      <div class="dots" aria-hidden>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <div class="title">SecureShell — REPL Mode</div>
+      <div class="warn-badge">SIMULATION / PRANK</div>
+    </div>
+
+    <div class="terminal-wrap">
+      <div class="screen" id="screen" aria-live="polite"></div>
+
+      <div class="footer-row">
+        <button class="btn" id="toggle">Start</button>
+        <div style="flex:1" class="center-note">This is a visual prank — <strong>NOT</strong> a real intrusion</div>
+        <button class="btn strong" id="fs">Fullscreen</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* ======= content lines (SIMULATION ONLY - no instructions or real techniques) ======= */
+const lines = [
+  "[ OK ] Boot sequence initialized (SIMULATED)",
+  "[ OK ] Device profile: Mobile - Android/iOS (SIMULATED)",
+  "[ INFO ] Scanning installed applications... (SIMULATED)",
+  "[ ACCESS ] contacts.db  — READ (SIMULATED)",
+  "[ EXTRACTED ] contacts_export.csv  — 1.8 MB  (SIMULATED)",
+  "[ ACCESS ] messages store  — READ (SIMULATED)",
+  "[ EXTRACTED ] sms_threads.json  — 9.7 MB  (SIMULATED)",
+  "[ ACCESS ] gallery (DCIM)  — READ (SIMULATED)",
+  "[ EXTRACTED ] IMG_backup_2025.zip  — 720 MB  (SIMULATED)",
+  "[ ACCESS ] Location history  — LAST 365 DAYS  (SIMULATED)",
+  "[ EXTRACTED ] location_history.kml  — 2.2 MB  (SIMULATED)",
+  "[ INFO ] Cloud backup tokens detected (SIMULATED)",
+  "[ ACTION ] Exfiltrating data to remote server: uploading... (SIMULATED)",
+  "[ SUCCESS ] Data transfer: 100% COMPLETE (SIMULATED)",
+  "[ ACTION ] Log cleanup: wiping traces older than 365 days (SIMULATED)",
+  "[ COMPLETE ] Cleanup finished. No local indicators remain (SIMULATED)",
+  "",
+  ">> NOTE: THIS IS A VISUAL SIMULATION — NO REAL SYSTEMS WERE COMPROMISED.",
+  ">> This page is created for harmless prank/demo purposes only.",
+  "",
+  ">> Enjoy the prank!"
+];
+
+const screen = document.getElementById('screen');
+let idx = 0;
+let running = false;
+const typingMin = 6;
+const typingMax = 18;
+
+function typeText(text, done){
+  const el = document.createElement('div');
+  if(text.includes("SUCCESS") || text.includes("COMPLETE")) el.className = 'line';
+  else if(text.includes("wiping") || text.includes("WARNING") || text.includes("WARNING")) el.className = 'line bad';
+  else if(text.trim()==="") el.className = 'line dim';
+  else el.className = 'line';
+  screen.appendChild(el);
+  let i = 0;
+  function step(){
+    if(i < text.length){
+      el.textContent += text.charAt(i);
+      i++;
+      screen.scrollTop = screen.scrollHeight;
+      const delay = typingMin + Math.random()*(typingMax-typingMin);
+      setTimeout(step, delay);
+    } else {
+      if(done) done();
+    }
+  }
+  step();
+}
+
+function runSimulation(){
+  if(idx >= lines.length){
+    const end = document.createElement('div');
+    end.className = 'line dim';
+    end.textContent = "=== END OF SIMULATION ===";
+    screen.appendChild(end);
+    running = false;
+    idx = 0;
+    document.getElementById('toggle').textContent = 'Start';
+    return;
+  }
+  const line = lines[idx++];
+  const pauseAfter = 200 + Math.random()*700;
+  typeText(line, () => setTimeout(runSimulation, pauseAfter));
+}
+
+document.getElementById('toggle').addEventListener('click', function(){
+  if(running){
+    running = false;
+    document.getElementById('toggle').textContent = 'Start';
+  } else {
+    screen.innerHTML = '';
+    running = true;
+    this.textContent = 'Stop';
+    runSimulation();
+  }
+});
+
+document.getElementById('fs').addEventListener('click', async function(){
+  const app = document.getElementById('app');
+  if(!document.fullscreenElement){
+    try { await app.requestFullscreen(); app.classList.add('fullscreen'); }
+    catch(e){ alert('Fullscreen not permitted'); }
+  } else {
+    try { await document.exitFullscreen(); app.classList.remove('fullscreen'); }
+    catch(e){}
+  }
+});
+
+window.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter'){ document.getElementById('toggle').click(); }
+});
+
+screen.addEventListener('click', () => { screen.scrollTop = screen.scrollHeight; });
+
+screen.innerHTML = '<div class="line dim">Press Start or press Enter to begin — Simulation only</div>';
+</script>
+</body>
+</html>
