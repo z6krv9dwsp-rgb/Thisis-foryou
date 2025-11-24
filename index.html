@@ -2,182 +2,159 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>SIMULATED HACK APP — Prank</title>
-<meta name="theme-color" content="#00110a">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Where We Could Have Met — A Little Love Page</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#00110a;
-    --panel:#07120e;
-    --green:#80ff7a;
-    --muted:#6fa67a;
-    --accent:#0f7a50;
-    --danger:#ff6b6b;
-  }
-  html,body{height:100%;margin:0;font-family: "Courier New", Courier, monospace;background:linear-gradient(180deg,var(--bg),#001316 75%);color:var(--green);}
-  .app {
-    max-width:420px;
-    margin:18px auto;
-    height:calc(100vh - 36px);
-    background:linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.45));
-    border-radius:18px;
-    box-shadow:0 12px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
-    overflow:hidden;
-    border:1px solid rgba(0,255,120,0.03);
-  }
-  .topbar{
-    height:56px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:0 12px;
-    background:linear-gradient(90deg, rgba(0,255,120,0.02), rgba(0,0,0,0));
-    border-bottom:1px solid rgba(0,255,120,0.03);
-  }
-  .dots{display:flex;gap:6px;align-items:center;}
-  .dot{width:10px;height:10px;border-radius:50%;background:var(--muted);opacity:0.9}
-  .title{flex:1;font-weight:700;color:var(--green);font-size:14px;}
-  .warn-badge{background:rgba(255,0,0,0.08);color:var(--danger);padding:6px 8px;border-radius:8px;font-weight:700;font-size:12px;border:1px solid rgba(255,0,0,0.12)}
-  .terminal-wrap{padding:14px;height:calc(100% - 56px);box-sizing:border-box;display:flex;flex-direction:column;}
-  .screen {background:linear-gradient(180deg,#001814 0%, #00130f 100%);border-radius:10px;padding:12px;flex:1;overflow:auto;border:1px solid rgba(128,255,122,0.04);box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);}
-  .line{ white-space:pre-wrap; font-size:14px; margin:6px 0; color:var(--green); opacity:0.98; }
-  .line.bad{ color:var(--danger); }
-  .line.dim{ color:var(--muted); font-style:italic; font-size:12px; }
-  .prompt{ color: #9ffeab; font-weight:700; }
-  .footer-row{ display:flex; justify-content:space-between; gap:8px; align-items:center; margin-top:10px; }
-  .btn{ background:transparent;border:1px solid rgba(128,255,122,0.08);padding:8px 10px;border-radius:10px;color:var(--green);font-weight:700;font-size:13px; }
-  .btn.strong{ background:linear-gradient(90deg, rgba(128,255,122,0.06), rgba(0,0,0,0.02)); border:1px solid rgba(128,255,122,0.14); }
-  .center-note{ text-align:center;color:var(--muted);font-size:12px;padding:8px 4px; }
-  .fullscreen { width:100vw; height:100vh; max-width:none; border-radius:0; margin:0; }
-  @media (max-width:480px){
-    .app { margin:6px; height:calc(100vh - 12px); border-radius:12px; }
-    .topbar{height:50px}
-    .title{font-size:13px}
-    .line{font-size:15px}
-  }
+  :root{ --bg:#050506; --gold:#d4af37; --muted:#9b8b72; --accent:#ffffff; --glass: rgba(255,255,255,0.02); }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,Arial;background: radial-gradient( circle at 10% 10%, rgba(212,175,55,0.02), rgba(0,0,0,0) 25%), linear-gradient(180deg,#050505, #0b0b0b); color:var(--accent); -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:980px;margin:28px auto;padding:28px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(212,175,55,0.06);box-shadow:0 14px 50px rgba(0,0,0,0.7);position:relative;overflow:hidden;}
+
+  header{display:flex;gap:18px;align-items:center;border-bottom:1px solid rgba(212,175,55,0.06);padding-bottom:16px;margin-bottom:18px;}
+  .logo{width:96px;height:96px;border-radius:12px;overflow:hidden;border:2px solid rgba(212,175,55,0.12);display:flex;align-items:center;justify-content:center;background:#0a0a0a;box-shadow:0 6px 18px rgba(0,0,0,0.6);}
+  .logo img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02);}
+
+  h1{font-family:"Merriweather", serif;font-weight:700;margin:0;color:var(--gold);font-size:32px}
+  p.lead{margin:4px 0 0;color:var(--muted);font-size:14px}
+
+  .hero{display:grid;grid-template-columns: 1fr 1fr;gap:14px;margin-top:18px;align-items:stretch;}
+  .photo{border-radius:12px;overflow:hidden;border:1px solid rgba(212,175,55,0.06);box-shadow:inset 0 1px 0 rgba(255,255,255,0.02);}
+  .photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.9s ease;}
+  .photo:hover img{transform:scale(1.03) rotate(-0.6deg);}
+
+  .panel{padding:18px;background:linear-gradient(180deg, rgba(212,175,55,0.03), rgba(255,255,255,0.01));border-radius:12px;border:1px solid rgba(212,175,55,0.03);}
+
+  .gold{color:var(--gold);font-weight:700}
+  .muted{color:var(--muted)}
+  .quote{font-family:"Merriweather",serif;font-style:italic;color:var(--gold);font-size:20px;margin:8px 0 12px;}
+
+  .questions{margin-top:12px}
+  .question{margin:12px 0;padding:14px;border-radius:10px;background:rgba(255,255,255,0.02);border-left:3px solid rgba(212,175,55,0.18);}
+  .question h3{margin:0;font-size:16px;color:var(--gold);}
+  .question p{margin:8px 0 0;color:var(--accent);}
+
+  .answers{margin-top:14px}
+  .answer{margin:10px 0;padding:12px;border-radius:10px;background:linear-gradient(180deg,#070707,#0b0b0b);color:var(--muted);font-size:15px;}
+
+  .cta{margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+  .btn{background:transparent;border:1px solid rgba(212,175,55,0.28);color:var(--gold);padding:10px 14px;border-radius:8px;font-weight:700;text-decoration:none;}
+  .btn.secondary{border-color:rgba(255,255,255,0.06);color:var(--accent);}
+
+  footer{margin-top:22px;border-top:1px solid rgba(212,175,55,0.04);padding-top:12px;color:var(--muted);font-size:13px;text-align:center}
+
+  /* floating petals animation */
+  .petal{position:absolute;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 30% 30%, rgba(212,175,55,0.95), rgba(212,175,55,0.65));opacity:0.16;filter:blur(2px);animation:float 10s linear infinite;}
+  @keyframes float{0%{transform:translateY(-40vh) translateX(0) scale(0.6);opacity:0.1}50%{opacity:0.25}100%{transform:translateY(110vh) translateX(60px) scale(1);opacity:0}}
+
+  /* subtle gold shimmer over headings */
+  .shimmer{position:relative;display:inline-block;overflow:hidden;}
+  .shimmer::after{content:'';position:absolute;left:-50%;top:0;width:200%;height:100%;background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.09), rgba(255,255,255,0));transform:skewX(-15deg);animation:shine 3.8s linear infinite;}
+  @keyframes shine{0%{left:-120%}100%{left:120%}}
+
+  /* responsive */
+  @media (max-width:900px){.hero{grid-template-columns:1fr;}header{flex-direction:column;align-items:flex-start;gap:8px}}
 </style>
 </head>
 <body>
-  <div class="app" id="app">
-    <div class="topbar">
-      <div class="dots" aria-hidden>
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  <div class="wrap">
+    <div class="petal" style="left:8%; animation-duration:12s;"></div>
+    <div class="petal" style="left:24%; width:22px;height:22px; animation-duration:14s; opacity:0.12;"></div>
+    <div class="petal" style="left:56%; width:16px;height:16px; animation-duration:10s; opacity:0.14;"></div>
+    <div class="petal" style="left:80%; width:20px;height:20px; animation-duration:16s; opacity:0.11;"></div>
+
+    <header>
+      <div class="logo"><img src="child1.jpeg" alt="us"></div>
+      <div>
+        <h1 class="shimmer">Where We Could Have Met</h1>
+        <p class="lead muted">A little page for you — a mix of English &amp; Arabic, just how I feel.</p>
       </div>
-      <div class="title">SecureShell — REPL Mode</div>
-      <div class="warn-badge">SIMULATION / PRANK</div>
+    </header>
+
+    <div class="hero">
+      <div class="photo panel"><img src="child1.jpeg" alt="child-1"></div>
+      <div class="photo panel"><img src="child2.jpeg" alt="child-2"></div>
     </div>
 
-    <div class="terminal-wrap">
-      <div class="screen" id="screen" aria-live="polite"></div>
+    <div class="panel" style="margin-top:18px"><p>Sometimes I wonder what you truly are to me.<br>Every time the answer feels bigger than words.<br>You are the quiet miracle my heart keeps choosing.<br>Even on the days when everything feels uncertain.<br>No matter the differences between us.<br>No matter the weight we carry.<br>Whether life shifts or stays painfully the same.<br>You remain the one thing I could never reach.<br>Yet the one I loved more deeply than you could ever imagine.<br>These thoughts do not visit me with anyone else.<br>They come only with you.<br>Suddenly and softly.<br>Like the way dusk arrives.<br>Without asking permission.<br>Yet impossible to ignore.<br>I imagine us in a quiet garden.<br>Roses moving gently around us.<br>Warm lights glowing like small constellations.<br>A blanket between us.<br>A playlist of songs that feel like whispered memories.<br>I bring the tea.<br>You bring your smile.<br>The smile that holds an entire universe inside it.<br>Would you meet me somewhere quiet.<br>Where even the flowers lean in to listen.<br>Because every time I think of you.<br>I discover a new reason to smile.<br>If love were a season.<br>I would choose to live in your summer forever.<br>Warm.<br>Bright.<br>Endless.<br>There are moments when I wish I could say all of this out loud.<br>Moments when my hands ache to write you letters on paper.<br>Real letters.<br>The kind people used to pour their whole hearts into.<br>I have written so many.<br>Folded them carefully.<br>Traced your name on the envelope.<br>But I never found the courage to send them.<br>Maybe because the words felt too honest.<br>Maybe because loving you feels too big to fit on a single page.<br>But here I am now.<br>Writing anyway.<br>Because the truth keeps rising in me.<br>No matter how much I try to quiet it.<br>The truth is this.<br>After everything.<br>After all the beginnings and endings.<br>After all the things we never said.<br>I still love you.<br>More softly.<br>More quietly.<br>More honestly than before.<br>Maybe this is the closest thing to courage I have ever had with you.<br></p><p>1) If we had met as kids — would we have fallen in love?</p><p>2) What would we have whispered to each other?</p><p>3) Would anything change if we’d met earlier?</p></div>
+      <p><strong class="gold"></span></p>
 
-      <div class="footer-row">
-        <button class="btn" id="toggle">Start</button>
-        <div style="flex:1" class="center-note">This is a visual prank — <strong>NOT</strong> a real intrusion</div>
-        <button class="btn strong" id="fs">Fullscreen</button>
+      <div class="questions">
+        <div class="question">
+          <h3>1) If we had met as kids — would we have fallen in love?</h3>
+          <p>I like to think yes. Two curious hearts, laughing in the sun — that kind of easy, honest love grows strong.</p>
+        </div>
+
+        <div class="question">
+          <h3>2) What would we have whispered to each other?</h3>
+          <p>"Let's keep exploring. I'll tell you everything." A promise to be safe and curious together.</p>
+        </div>
+
+        <div class="question">
+          <h3>3) Would anything change if we’d met earlier?</h3>
+          <p>Maybe the world would have given us different stories, but the best part is — I'd still choose you.</p>
+        </div>
       </div>
+
+      <div class="answers">
+        <div class="answer"><strong></div>
+        <div class="answer"><strong>ملاحظة بالعربي:</strong> بحب ضحكتك، وبحب إن كل حاجة معاك بتحسّسني بالأمان. خلينا نخرج في مكان وردي ونحكي لبعض كل اللي جوانا.</div>
+      </div>
+
+      <div style="margin-top:16px">
+        <p class="muted"></p>
+      </div>
+
+      <div class="cta">
+        <a class="btn" href="#plan">Let's plan that romantic day</a>
+        <a class="btn secondary" href="#more">Show more love lines</a>
+
+        <!-- audio controls -->
+        <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+          <audio id="bgm" src="voila_inspired_instrumental.wav" controls preload="auto"></audio>
+          <button class="btn secondary" id="mute">Mute</button>
+        </div>
+      </div>
+
+      <div id="plan" style="margin-top:14px">
+        <h3 class="gold">A little plan (short & romantic)</h3>
+        <p class="muted">Location idea: a quiet garden with roses, low lights, a small blanket and a playlist of songs we both like. I’ll bring tea, you bring your smile.</p>
+        <p style="margin-top:8px"><em>'Would you like to meet me someplace quiet, where flowers listen to us?'</em></p>
+      </div>
+
+      <div id="more" style="margin-top:12px">
+        <h3 class="gold"></h3>
+        <ul class="muted" style="line-height:1.6">
+          <li>"Every time I think of you, I find a new reason to smile."</li>
+          <li>"If love were a season, I'd stay in your summer forever."</li>
+          <li>بصي في عيني كده — خلّيني أقولك إنك أهم حاجة حصلتلي.</li>
+        </ul>
+      </div>
+
     </div>
+
+    <footer>
+      Made with care — send this link, then message her: "<span style="color:var(--gold)">I wrote something for you — open it when you have a quiet minute.</span>"
+    </footer>
   </div>
 
 <script>
-/* ======= content lines (SIMULATION ONLY - no instructions or real techniques) ======= */
-const lines = [
-  "[ OK ] Boot sequence initialized (SIMULATED)",
-  "[ OK ] Device profile: Mobile - Android/iOS (SIMULATED)",
-  "[ INFO ] Scanning installed applications... (SIMULATED)",
-  "[ ACCESS ] contacts.db  — READ (SIMULATED)",
-  "[ EXTRACTED ] contacts_export.csv  — 1.8 MB  (SIMULATED)",
-  "[ ACCESS ] messages store  — READ (SIMULATED)",
-  "[ EXTRACTED ] sms_threads.json  — 9.7 MB  (SIMULATED)",
-  "[ ACCESS ] gallery (DCIM)  — READ (SIMULATED)",
-  "[ EXTRACTED ] IMG_backup_2025.zip  — 720 MB  (SIMULATED)",
-  "[ ACCESS ] Location history  — LAST 365 DAYS  (SIMULATED)",
-  "[ EXTRACTED ] location_history.kml  — 2.2 MB  (SIMULATED)",
-  "[ INFO ] Cloud backup tokens detected (SIMULATED)",
-  "[ ACTION ] Exfiltrating data to remote server: uploading... (SIMULATED)",
-  "[ SUCCESS ] Data transfer: 100% COMPLETE (SIMULATED)",
-  "[ ACTION ] Log cleanup: wiping traces older than 365 days (SIMULATED)",
-  "[ COMPLETE ] Cleanup finished. No local indicators remain (SIMULATED)",
-  "",
-  ">> NOTE: THIS IS A VISUAL SIMULATION — NO REAL SYSTEMS WERE COMPROMISED.",
-  ">> This page is created for harmless prank/demo purposes only.",
-  "",
-  ">> Enjoy the prank!"
-];
-
-const screen = document.getElementById('screen');
-let idx = 0;
-let running = false;
-const typingMin = 6;
-const typingMax = 18;
-
-function typeText(text, done){
-  const el = document.createElement('div');
-  if(text.includes("SUCCESS") || text.includes("COMPLETE")) el.className = 'line';
-  else if(text.includes("wiping") || text.includes("WARNING") || text.includes("WARNING")) el.className = 'line bad';
-  else if(text.trim()==="") el.className = 'line dim';
-  else el.className = 'line';
-  screen.appendChild(el);
-  let i = 0;
-  function step(){
-    if(i < text.length){
-      el.textContent += text.charAt(i);
-      i++;
-      screen.scrollTop = screen.scrollHeight;
-      const delay = typingMin + Math.random()*(typingMax-typingMin);
-      setTimeout(step, delay);
-    } else {
-      if(done) done();
-    }
-  }
-  step();
-}
-
-function runSimulation(){
-  if(idx >= lines.length){
-    const end = document.createElement('div');
-    end.className = 'line dim';
-    end.textContent = "=== END OF SIMULATION ===";
-    screen.appendChild(end);
-    running = false;
-    idx = 0;
-    document.getElementById('toggle').textContent = 'Start';
-    return;
-  }
-  const line = lines[idx++];
-  const pauseAfter = 200 + Math.random()*700;
-  typeText(line, () => setTimeout(runSimulation, pauseAfter));
-}
-
-document.getElementById('toggle').addEventListener('click', function(){
-  if(running){
-    running = false;
-    document.getElementById('toggle').textContent = 'Start';
-  } else {
-    screen.innerHTML = '';
-    running = true;
-    this.textContent = 'Stop';
-    runSimulation();
-  }
+// small UX: mute toggle and autoplay hint
+const bgm = document.getElementById('bgm');
+const muteBtn = document.getElementById('mute');
+muteBtn.addEventListener('click', ()=>{
+  if(bgm.muted){ bgm.muted = false; muteBtn.textContent = 'Mute'; }
+  else { bgm.muted = true; muteBtn.textContent = 'Unmute'; }
 });
 
-document.getElementById('fs').addEventListener('click', async function(){
-  const app = document.getElementById('app');
-  if(!document.fullscreenElement){
-    try { await app.requestFullscreen(); app.classList.add('fullscreen'); }
-    catch(e){ alert('Fullscreen not permitted'); }
-  } else {
-    try { await document.exitFullscreen(); app.classList.remove('fullscreen'); }
-    catch(e){}
-  }
+// gentle fade-in for page elements
+window.addEventListener('load', ()=>{
+  document.querySelectorAll('.wrap, .photo img, .panel').forEach((el,i)=>{
+    el.style.opacity = 0;
+    setTimeout(()=> el.style.transition = 'opacity 900ms ease', 50);
+    setTimeout(()=> el.style.opacity = 1, 150 + i*120);
+  });
 });
-
-window.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter'){ document.getElementById('toggle').click(); }
-});
-
-screen.addEventListener('click', () => { screen.scrollTop = screen.scrollHeight; });
-
-screen.innerHTML = '<div class="line dim">Press Start or press Enter to begin — Simulation only</div>';
 </script>
 </body>
 </html>
